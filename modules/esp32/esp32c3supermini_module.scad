@@ -69,3 +69,29 @@ module esp32c3_supermini_shadow() {
         cube([esp32c3_supermini_usbc_width, esp32c3_supermini_usbc_length, esp32c3_supermini_usbc_height]);
     }
 }
+
+module esp32c3_supermini_box(box_height) {
+    // a "cube" with the 2d size of the esp32 + a smaller appendix for the usb c
+    // the height must be supplied as a parameter
+
+    cube([esp32c3_supermini_pcb_width, esp32c3_supermini_pcb_length, box_height]);
+    translate([esp32c3_supermini_lat_width,esp32c3_supermini_length-esp32c3_supermini_usbc_length,0]) { 
+        cube([esp32c3_supermini_usbc_width, esp32c3_supermini_usbc_length, box_height]);
+    }
+}
+
+module esp32c3_supermini_surrounding_wall(wall_width, wall_height) {
+    // a wall that goes around the esp32 with a hole for the usbc
+    // the height must be supplied as a parameter
+
+    difference() {
+      cube([esp32c3_supermini_pcb_width+2*wall_width, esp32c3_supermini_pcb_length+2*wall_width, wall_height]);
+      translate([wall_width, wall_width, 0]) { 
+        esp32c3_supermini_box(wall_height);
+        // elongate usb c
+        translate([esp32c3_supermini_lat_width,esp32c3_supermini_length-esp32c3_supermini_usbc_length,0]) { 
+          cube([esp32c3_supermini_usbc_width, esp32c3_supermini_usbc_length+wall_width, wall_height]);
+        }
+      }
+    }
+}
