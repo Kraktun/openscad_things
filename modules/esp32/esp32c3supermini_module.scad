@@ -80,13 +80,14 @@ module esp32c3_supermini_box(box_height) {
     }
 }
 
-module esp32c3_supermini_surrounding_wall(wall_width, wall_height) {
+module esp32c3_supermini_surrounding_wall(wall_width, wall_height, base_height=0) {
     // a wall that goes around the esp32 with a hole for the usbc
     // the height must be supplied as a parameter
+    // if base_height is > 0, a base is added (the height of the wall starts from the top of the base)
 
     difference() {
-      cube([esp32c3_supermini_pcb_width+2*wall_width, esp32c3_supermini_pcb_length+2*wall_width, wall_height]);
-      translate([wall_width, wall_width, 0]) { 
+      cube([esp32c3_supermini_pcb_width+2*wall_width, esp32c3_supermini_pcb_length+2*wall_width, wall_height+base_height]);
+      translate([wall_width, wall_width, base_height]) { 
         esp32c3_supermini_box(wall_height);
         // elongate usb c
         translate([esp32c3_supermini_lat_width,esp32c3_supermini_length-esp32c3_supermini_usbc_length,0]) { 
