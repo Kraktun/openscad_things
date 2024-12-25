@@ -9,7 +9,7 @@ default_hole_radius = 2;
 module fan_base_w_holes(width, height, thickness, hole_radius=default_hole_radius) {
     difference() {
         cube([thickness, width, height]);
-        translation_axis = height/2;
+        translation_axis = width/10/2; // height of the holes from the bottom, should be enough to make the fan touch the bottom
         translate([0,translation_axis,translation_axis]) {
             rotate([0,90,0]) {
                 cylinder(h = thickness, r = hole_radius);

@@ -53,8 +53,8 @@ module step_up_head(thickness = step_up_thickness_bars) {
         }
     }
 }
-module step_up_head_hat(thickness = step_up_thickness_bars) {
-    translate([step_up_length+2*thickness-step_up_head_hat_width, 0, step_up_height]) {
+module step_up_head_hat(thickness = step_up_thickness_bars, space_from_head=0) {
+    translate([step_up_length+2*thickness-step_up_head_hat_width-space_from_head, 0, step_up_height]) {
         cube([step_up_head_hat_width, step_up_width+2*thickness, thickness]);
     }
 }
@@ -65,12 +65,12 @@ module step_up_tail(thickness = step_up_thickness_bars) {
     }
 }
 
-module step_up_aio(thickness_base = step_up_thickness_base, thickness_bars = step_up_thickness_bars) {
+module step_up_aio(thickness_base = step_up_thickness_base, thickness_bars = step_up_thickness_bars, hat_space_from_head=0) {
     step_up_base(thickness = thickness_base, thickness_bars = thickness_bars);
     translate([0, 0, thickness_base]) {
         step_up_bars(thickness = thickness_bars);
         step_up_head(thickness = thickness_bars);
-        step_up_head_hat(thickness = thickness_bars);
+        step_up_head_hat(thickness = thickness_bars, space_from_head=hat_space_from_head);
         step_up_tail(thickness = thickness_bars);
     }
 }

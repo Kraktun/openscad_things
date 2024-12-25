@@ -38,19 +38,31 @@ which is why the measures allow for some room around it)
 |_|
 
 */
-esp32c3_supermini_width = 18;
+
+// set esp32c3_supermini_overrider if your printer requires a manual resize to print the correct sizes 
+// and instead you want to manually increase the main sizes by a given amount
+// e.g. esp32c3_supermini_overrider = 1
+// means that the base will be 1mm wider
+// note that esp32c3_supermini_overrider must be set before your <include> statement
+esp32c3_supermini_overrider_in = is_undef(esp32c3_supermini_overrider) ? 0 : esp32c3_supermini_overrider;
+
+if (esp32c3_supermini_overrider_in != 0) {
+  echo(str("Setting a manual override for esp32c3_supermini of ", esp32c3_supermini_overrider_in));
+}
+
+esp32c3_supermini_width = 18 + esp32c3_supermini_overrider_in;
 esp32c3_supermini_pcb_width = esp32c3_supermini_width;
-esp32c3_supermini_usbc_width = 9;
+esp32c3_supermini_usbc_width = 9 + esp32c3_supermini_overrider_in;
 esp32c3_supermini_lat_width = (esp32c3_supermini_width - esp32c3_supermini_usbc_width)/2;
-esp32c3_supermini_usbc_length = 7.5; // includes esp32c3_supermini_usbc_length_out
-esp32c3_supermini_usbc_length_out = 1.5;
-esp32c3_supermini_pcb_length = 22.5;
+esp32c3_supermini_usbc_length = 7.5 + esp32c3_supermini_overrider_in; // includes esp32c3_supermini_usbc_length_out
+esp32c3_supermini_usbc_length_out = 1.5 + esp32c3_supermini_overrider_in/2;
+esp32c3_supermini_pcb_length = 23 + esp32c3_supermini_overrider_in;
 esp32c3_supermini_length = esp32c3_supermini_usbc_length_out + esp32c3_supermini_pcb_length;
-esp32c3_supermini_pcb_height = 1;
-esp32c3_supermini_usbc_height = 3.1;
+esp32c3_supermini_pcb_height = 1 + esp32c3_supermini_overrider_in/2;
+esp32c3_supermini_usbc_height = 3.1 + esp32c3_supermini_overrider_in/2;
 esp32c3_supermini_height = esp32c3_supermini_pcb_height + esp32c3_supermini_usbc_height;
 // buttons and components on the pcb
-esp32c3_supermini_internal_comp_height = esp32c3_supermini_pcb_height + 2;
+esp32c3_supermini_internal_comp_height = esp32c3_supermini_pcb_height + 2 + esp32c3_supermini_overrider_in/2;
 esp32c3_supermini_internal_comp_width = esp32c3_supermini_width - 4;
 esp32c3_supermini_internal_comp_length = esp32c3_supermini_length - esp32c3_supermini_usbc_length;
 
